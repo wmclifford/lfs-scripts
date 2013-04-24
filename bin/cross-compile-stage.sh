@@ -3,8 +3,8 @@
 set -o nounset
 set -o errexit
 
-source lib/functions.sh
-source lib/build-env.sh
+source ../lib/functions.sh
+source ../lib/build-env.sh
 
 trap WAT EXIT
 

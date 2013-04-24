@@ -3,8 +3,8 @@
 set -o nounset
 set -o errexit
 
-source lib/functions.sh
-source lib/build-env.sh
+source ../lib/functions.sh
+source ../lib/build-env.sh
 
 PKG_NAME="CLFS"
 PKG_VERS="2.0rc1"
