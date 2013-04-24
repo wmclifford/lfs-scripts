@@ -2,7 +2,7 @@
 
 function cleanup_package() {
 	set +e
-	cd ${CLFS_SOURCES}
+	cd "${CLFS_SOURCES}"
 	if [ -d "${CLFS_SOURCES}/${PKG_SOURCE_DIR}" ] ; then
 		rm -rf ${1} "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
 	fi
@@ -13,7 +13,7 @@ function cleanup_package() {
 }
 
 function dump_package() {
-	cd ${CLFS_SOURCES}
+	cd "${CLFS_SOURCES}"
 	if [ ! -f "${CLFS_SOURCES}/${PKG_ARCHIVE}" ] ; then
 		echo "Missing: ${PKG_ARCHIVE}"
 		return 1
@@ -24,11 +24,11 @@ function dump_package() {
 			mkdir -p ${1} "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 		fi
 	fi
-	cd ${CLFS_SOURCES}/${PKG_SOURCE_DIR}
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
 }
 
 function get_package() {
-	cd ${CLFS_SOURCES}
+	cd "${CLFS_SOURCES}"
 	if [ -f "${CLFS_SOURCES}/${PKG_ARCHIVE}" ] ; then
 		return 0
 	fi
@@ -44,7 +44,7 @@ function user_exists() {
 }
 
 function validate_package() {
-	cd ${CLFS_SOURCES}
+	cd "${CLFS_SOURCES}"
 	echo "${PKG_MD5} *${PKG_ARCHIVE}" |md5sum --check
 }
 
