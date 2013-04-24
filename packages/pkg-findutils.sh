@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Findutils
+PKG_VERS=4.4.2
+PKG_URI=http://ftp.gnu.org/gnu/findutils/findutils-4.4.2.tar.gz
+PKG_MD5=351cc4adb07d54877fa15f75fb77d39f
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

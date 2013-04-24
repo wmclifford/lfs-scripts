@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Man-pages
+PKG_VERS=3.43
+PKG_URI=http://www.kernel.org/pub//linux/docs/man-pages/man-pages-3.43.tar.xz
+PKG_MD5=761b823ad353975bb87eadb4a8690069
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

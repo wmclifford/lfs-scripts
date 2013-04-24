@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=M4
+PKG_VERS=1.4.16
+PKG_URI=http://ftp.gnu.org/gnu/m4/m4-1.4.16.tar.bz2
+PKG_MD5=8a7cef47fecab6272eb86a6be6363b2f
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

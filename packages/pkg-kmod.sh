@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Kmod
+PKG_VERS=10
+PKG_URI=http://www.kernel.org/pub//linux/utils/kernel/kmod/kmod-10.tar.xz
+PKG_MD5=e2a883c4df15a50f78a7a61d5b64089f
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

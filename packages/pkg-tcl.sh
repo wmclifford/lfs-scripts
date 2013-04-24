@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Tcl
+PKG_VERS=8.5.12
+PKG_URI=http://downloads.sourceforge.net/tcl/tcl8.5.12-src.tar.gz
+PKG_MD5=174b2b4c619ba8f96875d8a051917703
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

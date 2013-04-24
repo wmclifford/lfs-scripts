@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Util-linux
+PKG_VERS=2.22.1
+PKG_URI=http://www.kernel.org/pub//linux/utils/util-linux/v2.22/util-linux-2.22.1.tar.xz
+PKG_MD5=730cf9932531ed09b53a04ca30fcb4c9
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

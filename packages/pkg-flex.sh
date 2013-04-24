@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Flex
+PKG_VERS=2.5.37
+PKG_URI=http://downloads.sourceforge.net/flex/flex-2.5.37.tar.bz2
+PKG_MD5=c75940e1fc25108f2a7b3ef42abdae06
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

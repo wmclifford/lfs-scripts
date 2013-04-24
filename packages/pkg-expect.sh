@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Expect
+PKG_VERS=5.45
+PKG_URI=http://downloads.sourceforge.net/project/expect/Expect/5.45/expect5.45.tar.gz
+PKG_MD5=44e1a4f4c877e9ddc5a542dfa7ecc92b
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

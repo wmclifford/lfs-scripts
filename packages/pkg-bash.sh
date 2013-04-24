@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Bash
+PKG_VERS=4.2
+PKG_URI=http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz
+PKG_MD5=3fb927c7c33022f1c327f14a81c0d4b0
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

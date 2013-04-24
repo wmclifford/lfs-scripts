@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Binutils
+PKG_VERS=2.23
+PKG_URI=http://ftp.gnu.org/gnu/binutils/binutils-2.23.tar.gz
+PKG_MD5=ed58f50d8920c3f1d9cb110d5c972c27
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

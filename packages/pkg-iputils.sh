@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=IPutils
+PKG_VERS=s20101006
+PKG_URI=http://www.skbuff.net/iputils/iputils-s20101006.tar.bz2
+PKG_MD5=a36c25e9ec17e48be514dc0485e7376c
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

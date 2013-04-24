@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Shadow
+PKG_VERS=4.1.5.1
+PKG_URI=http://pkg-shadow.alioth.debian.org/releases/shadow-4.1.5.1.tar.bz2
+PKG_MD5=a00449aa439c69287b6d472191dc2247
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

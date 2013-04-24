@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=DHCPCD
+PKG_VERS=5.5.6
+PKG_URI=http://roy.marples.name/downloads/dhcpcd/dhcpcd-5.5.6.tar.bz2
+PKG_MD5=a5c0e43b4e836cfc003437329f6b7982
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

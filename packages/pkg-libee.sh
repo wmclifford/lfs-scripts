@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Libee
+PKG_VERS=0.4.1
+PKG_URI=http://www.libee.org/download/files/download/libee-0.4.1.tar.gz
+PKG_MD5=7bbf4160876c12db6193c06e2badedb2
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

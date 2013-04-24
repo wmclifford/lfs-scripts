@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Udev
+PKG_VERS=182
+PKG_URI=http://www.kernel.org/pub//linux/utils/kernel/hotplug/udev-182.tar.xz
+PKG_MD5=023877e6cc0d907994b8c648beab542b
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

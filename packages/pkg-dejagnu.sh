@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=DejaGNU
+PKG_VERS=1.5
+PKG_URI=http://ftp.gnu.org/gnu/dejagnu/dejagnu-1.5.tar.gz
+PKG_MD5=3df1cbca885e751e22d3ebd1ac64dc3c
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

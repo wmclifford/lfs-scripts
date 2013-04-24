@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Libestr
+PKG_VERS=0.1.0
+PKG_URI=http://sourceforge.net/projects/libestr/files/libestr-0.1.0.tar.gz
+PKG_MD5=1b8fe449cffc259075d327334c93bbda
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

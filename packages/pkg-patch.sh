@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Patch
+PKG_VERS=2.7.1
+PKG_URI=http://ftp.gnu.org/gnu/patch/patch-2.7.1.tar.xz
+PKG_MD5=e9ae5393426d3ad783a300a338c09b72
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

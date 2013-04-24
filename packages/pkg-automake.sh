@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Automake
+PKG_VERS=1.12.4
+PKG_URI=http://ftp.gnu.org/gnu/automake/automake-1.12.4.tar.xz
+PKG_MD5=7395a0420ecb5c9bc43e5fcf4824df36
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

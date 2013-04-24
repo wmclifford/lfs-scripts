@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Gettext
+PKG_VERS=0.18.1.1
+PKG_URI=http://ftp.gnu.org/gnu/gettext/gettext-0.18.1.1.tar.gz
+PKG_MD5=3dd55b952826d2b32f51308f2f91aa89
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

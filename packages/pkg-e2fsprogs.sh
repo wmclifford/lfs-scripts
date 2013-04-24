@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=E2fsprogs
+PKG_VERS=1.42.6
+PKG_URI=http://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.42.6/e2fsprogs-1.42.6.tar.xz
+PKG_MD5=a75d1ffd3980e1470014da3df309c862
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

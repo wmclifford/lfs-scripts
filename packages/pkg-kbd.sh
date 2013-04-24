@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Kbd
+PKG_VERS=1.15.3
+PKG_URI=ftp://devel.altlinux.org/legion/kbd/kbd-1.15.3.tar.gz
+PKG_MD5=8143e179a0f3c25646ce5085e8777200
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

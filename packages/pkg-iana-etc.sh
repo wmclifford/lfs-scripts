@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Iana-Etc
+PKG_VERS=2.30
+PKG_URI=http://ftp.cross-lfs.org/pub/clfs/conglomeration/iana-etc/iana-etc-2.30.tar.bz2
+PKG_MD5=3ba3afb1d1b261383d247f46cb135ee8
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

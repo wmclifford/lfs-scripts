@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Bison
+PKG_VERS=2.6.4
+PKG_URI=http://ftp.gnu.org/gnu/bison/bison-2.6.4.tar.xz
+PKG_MD5=8b2dc57eb9d2d6de4715d30de6b2ee07
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

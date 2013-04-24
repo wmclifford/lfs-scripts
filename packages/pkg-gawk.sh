@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Gawk
+PKG_VERS=4.0.1
+PKG_URI=http://ftp.gnu.org/gnu/gawk/gawk-4.0.1.tar.xz
+PKG_MD5=a601b032c39cd982f34272664f8afa49
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}

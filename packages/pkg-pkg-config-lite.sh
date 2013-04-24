@@ -1,9 +1,9 @@
 #!/bin/sh
 
-PKG_NAME=m4_NAME
-PKG_VERS=m4_VERS
-PKG_URI=m4_URI
-PKG_MD5=m4_MD5
+PKG_NAME=Pkg-config-lite
+PKG_VERS=0.27.1-1
+PKG_URI=http://sourceforge.net/projects/pkgconfiglite/files/0.27.1-1/pkg-config-lite-0.27.1-1.tar.gz
+PKG_MD5=589448b99b6e073924c1bea88dfc9f38
 PKG_ARCHIVE=$(basename ${PKG_URI})
 PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
 PKG_BUILD_DIR=${PKG_SOURCE_DIR}
