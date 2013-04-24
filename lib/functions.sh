@@ -7,7 +7,7 @@ function cleanup_package() {
 		rm -rf ${1} "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
 	fi
 	if [ "x${PKG_BUILD_DIR}" != "x" -a -d "${CLFS_SOURCES}/${PKG_BUILD_DIR}" ] ; then
-		rm -rf ${1} "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+		rm -rf ${1} "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	fi
 	set -e
 }
@@ -19,6 +19,11 @@ function dump_package() {
 		return 1
 	fi
 	tar ${1}xf ${PKG_ARCHIVE}
+	if [ "${PKG_SOURCE_DIR}" != "${PKG_BUILD_DIR}" ] ; then
+		if [ "x${PKG_BUILD_DIR}" != "x" -a ! -d "${CLFS_SOURCES}/${PKG_BUILD_DIR}" ] ; then
+			mkdir -p ${1} "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+		fi
+	fi
 	cd ${CLFS_SOURCES}/${PKG_SOURCE_DIR}
 }
 
