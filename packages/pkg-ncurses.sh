@@ -38,17 +38,19 @@ cross_compile() {
 
 cross_compile_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make
+	make -C include
+	make -C progs tic
 }
 
 cross_compile_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make install
+	install -v -m755 progs/tic ${CLFS_CROSS_TOOLS}/bin
 }
 
 cross_compile_prepare() {
+	apply_patch_file 0
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	./configure --prefix=${CLFS_CROSS_TOOLS} --without-debug --without-shared
 }
 
 cross_compile_post_install() {

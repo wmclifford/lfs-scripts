@@ -40,7 +40,7 @@ cross_compile_install() {
 
 cross_compile_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	CPPFLAGS=-fexceptions ./configure --prefix=${CLFS_CROSS_TOOLS} --enable-cxx --disable-static
 }
 
 cross_compile_post_install() {

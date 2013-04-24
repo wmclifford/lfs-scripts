@@ -26,6 +26,57 @@ PKG_PATCH_MD5[2]="61d583984f9f12b6f37141e132fc7d57"
 PKG_PATCH_URI[2]="http://patches.cross-lfs.org/dev/gcc-4.6.3-specs-1.patch"
 
 #
+# Cross-compile stage (CLFS chapter 5) - static build
+#
+
+cross_compile_static() {
+	get_package $1
+	validate_package
+	dump_package $1
+	cross_compile_static_prepare
+	cross_compile_static_build
+	cross_compile_static_install
+	cross_compile_static_post_install
+	cleanup_package $1
+}
+
+cross_compile_static_build() {
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make all-gcc all-target-libgcc
+}
+
+cross_compile_static_install() {
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make install-gcc install-target-libgcc
+}
+
+cross_compile_static_prepare() {
+	apply_patch_file 0
+	apply_patch_file 2
+	apply_patch_file 1
+	echo -en "#undef STANDARD_INCLUDE_DIR\\n#define STANDARD_INCLUDE_DIR \"${CLFS_TOOLS}/include/\"\\n\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_1\\n#define STANDARD_STARTFILE_PREFIX_1 \"${CLFS_TOOLS}/lib/\"\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_2\\n#define STANDARD_STARTFILE_PREFIX_2 \"\"\\n" >> gcc/config/linux.h
+	cp -v gcc/Makefile.in{,.orig}
+	sed -e "s@\(^CROSS_SYSTEM_HEADER_DIR =\).*@\1 ${CLFS_TOOLS}/include@g" gcc/Makefile.in.orig > gcc/Makefile.in
+	touch ${CLFS_TOOLS}/include/limits.h
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	AR=ar LDFLAGS="-Wl,-rpath,${CLFS_CROSS_TOOLS}/lib" \
+		../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_CROSS_TOOLS} \
+		--build=${CLFS_HOST} --host=${CLFS_HOST} --target=${CLFS_TARGET} \
+		--with-sysroot=${CLFS} --with-local-prefix=${CLFS_TOOLS} --disable-nls \
+		--disable-shared --with-mpfr=${CLFS_CROSS_TOOLS} --with-gmp=${CLFS_CROSS_TOOLS} \
+		--with-ppl=${CLFS_CROSS_TOOLS} --with-cloog=${CLFS_CROSS_TOOLS} --without-headers \
+		--with-newlib --disable-decimal-float --disable-libgomp \
+		--disable-libmudflap --disable-libssp --disable-threads \
+		--enable-languages=c --disable-multilib --enable-cloog-backend=isl
+}
+
+cross_compile_static_post_install() {
+	NTD
+}
+
+#
 # Cross-compile stage (CLFS chapter 5)
 #
 
@@ -42,7 +93,7 @@ cross_compile() {
 
 cross_compile_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make
+	make AS_FOR_TARGET="${CLFS_TARGET}-as" LD_FOR_TARGET="${CLFS_TARGET}-ld"
 }
 
 cross_compile_install() {
@@ -51,8 +102,24 @@ cross_compile_install() {
 }
 
 cross_compile_prepare() {
+	apply_patch_file 0
+	apply_patch_file 2
+	apply_patch_file 1
+	echo -en "#undef STANDARD_INCLUDE_DIR\\n#define STANDARD_INCLUDE_DIR \"${CLFS_TOOLS}/include/\"\\n\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_1\\n#define STANDARD_STARTFILE_PREFIX_1 \"${CLFS_TOOLS}/lib/\"\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_2\\n#define STANDARD_STARTFILE_PREFIX_2 \"\"\\n" >> gcc/config/linux.h
+	cp -v gcc/Makefile.in{,.orig}
+	sed -e "s@\(^CROSS_SYSTEM_HEADER_DIR =\).*@\1 ${CLFS_TOOLS}/include@g" gcc/Makefile.in.orig > gcc/Makefile.in
+	touch ${CLFS_TOOLS}/include/limits.h
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	AR=ar LDFLAGS="-Wl,-rpath,${CLFS_CROSS_TOOLS}/lib" \
+		../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_CROSS_TOOLS} \
+		--build=${CLFS_HOST} --host=${CLFS_HOST} --target=${CLFS_TARGET} \
+		--with-sysroot=${CLFS} --with-local-prefix=${CLFS_TOOLS} --disable-nls \
+		--enable-shared --disable-static --enable-languages=c,c++ \
+		--enable-__cxa_atexit --with-mpfr=${CLFS_CROSS_TOOLS} --with-gmp=${CLFS_CROSS_TOOLS} \
+		--enable-c99 --with-ppl=${CLFS_CROSS_TOOLS} --with-cloog=${CLFS_CROSS_TOOLS} \
+		--enable-cloog-backend=isl --enable-long-long --enable-threads=posix --disable-multilib
 }
 
 cross_compile_post_install() {

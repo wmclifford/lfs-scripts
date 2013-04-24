@@ -6,7 +6,7 @@ PKG_URI="http://ftp.gnu.org/gnu/binutils/binutils-2.23.tar.gz"
 PKG_MD5="ed58f50d8920c3f1d9cb110d5c972c27"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
 PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
-PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+PKG_BUILD_DIR="binutils-build"
 
 #
 # Patches required by this package
@@ -30,17 +30,22 @@ cross_compile() {
 
 cross_compile_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make configure-host
 	make
 }
 
 cross_compile_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
+	cp -v ../${PKG_SOURCE_DIR}/include/libiberty.h ${CLFS_TOOLS}/include
 }
 
 cross_compile_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	AR=ar AS=as ../${PKG_SOURCE_DIR}/configure \
+		--prefix=${CLFS_CROSS_TOOLS} --host=${CLFS_HOST} --target=${CLFS_TARGET} \
+		--with-sysroot=${CLFS} --with-lib-path=${CLFS_TOOLS}/lib --disable-nls \
+		--enable-shared --disable-static --disable-multilib
 }
 
 cross_compile_post_install() {

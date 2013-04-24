@@ -1,12 +1,12 @@
 #!/bin/sh
 
-PKG_NAME=Linux-Headers
-PKG_VERS=3.8.7
-PKG_URI=
-PKG_MD5=
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="Linux-Headers"
+PKG_VERS="3.8.7"
+PKG_URI="https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.7.tar.xz"
+PKG_MD5="37ce9b5cc33551b45fea59c1c4c9da13"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,18 +24,20 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
-	make
+	NTD
 }
 
 cross_compile_install() {
 	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
-	make install
+	make ARCH=${CLFS_TARGET_ARCH} INSTALL_HDR_PATH=dest headers_install
+	cp -rv dest/include/* ${CLFS_TOOLS}/include/
 }
 
 cross_compile_prepare() {
 	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	install -dv ${CLFS_TOOLS}/include
+	make mrproper
+	make ARCH=${CLFS_TARGET_ARCH} headers_check
 }
 
 cross_compile_post_install() {

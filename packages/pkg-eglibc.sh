@@ -43,12 +43,30 @@ cross_compile_build() {
 
 cross_compile_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make install
+	make install inst_vardbdir=${CLFS_TOOLS}/var/db
+	cp -v ../${PKG_SOURCE_DIR}/sunrpc/rpc/*.h ${CLFS_TOOLS}/include/rpc
+	cp -v ../${PKG_SOURCE_DIR}/sunrpc/rpcsvc/*.h ${CLFS_TOOLS}/include/rpcsvc
+	cp -v ../${PKG_SOURCE_DIR}/nis/rpcsvc/*.h ${CLFS_TOOLS}/include/rpcsvc
 }
 
 cross_compile_prepare() {
+	apply_patch_archive 0
+	cp -v Makeconfig{,.orig}
+	sed -e 's/-lgcc_eh//g' Makeconfig.orig > Makeconfig
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	cat > config.cache << "EOF"
+libc_cv_forced_unwind=yes
+libc_cv_c_cleanup=yes
+libc_cv_gnu89_inline=yes
+libc_cv_ssp=no
+EOF
+	BUILD_CC="gcc" CC="${CLFS_TARGET}-gcc" \
+		AR="${CLFS_TARGET}-ar" RANLIB="${CLFS_TARGET}-ranlib" \
+		../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_TOOLS} \
+		--host=${CLFS_TARGET} --build=${CLFS_HOST} \
+		--disable-profile --with-tls --enable-kernel=2.6.32 \
+		--with-__thread --with-binutils=${CLFS_CROSS_TOOLS}/bin \
+		--with-headers=${CLFS_TOOLS}/include --cache-file=config.cache
 }
 
 cross_compile_post_install() {

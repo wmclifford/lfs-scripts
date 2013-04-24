@@ -1,12 +1,12 @@
 #!/bin/sh
 
-PKG_NAME=File
-PKG_VERS=5.11
-PKG_URI=ftp://ftp.astron.com/pub/file/file-5.11.tar.gz
-PKG_MD5=16a407bd66d6c7a832f3a5c0d609c27b
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=file-5.11
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="File"
+PKG_VERS="5.11"
+PKG_URI="ftp://ftp.astron.com/pub/file/file-5.11.tar.gz"
+PKG_MD5="16a407bd66d6c7a832f3a5c0d609c27b"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 
 #
 # Cross-compile stage (CLFS chapter 5)

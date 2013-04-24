@@ -11,7 +11,7 @@ PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 #
 # Patches required by this package
 #
-declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC PKG_PATCH_FILE
 
 PKG_PATCH_DESC[0]="M4 gets Patch"
 PKG_PATCH_MD5[0]="6c5013f9ae5afc78f123e96356ceec3e"
@@ -43,6 +43,7 @@ cross_compile_install() {
 }
 
 cross_compile_prepare() {
+	apply_patch_file 0
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }

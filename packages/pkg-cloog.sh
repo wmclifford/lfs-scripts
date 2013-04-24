@@ -40,7 +40,11 @@ cross_compile_install() {
 
 cross_compile_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_CROSS_TOOLS}
+	cp -v configure{,.orig}
+	sed -e "/LD_LIBRARY_PATH=/d" configure.orig >configure
+	LDFLAGS="-Wl,-rpath,${CLFS_CROSS_TOOLS}/lib" \
+		./configure --prefix=${CLFS_CROSS_TOOLS} --enable-shared --disable-static \
+		--with-gmp-prefix=${CLFS_CROSS_TOOLS}
 }
 
 cross_compile_post_install() {
