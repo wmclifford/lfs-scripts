@@ -1,5 +1,21 @@
 #!/bin/sh
 
+function apply_patch_archive() {
+	local -i patch_index=${1}
+	local patch_file="$(basename ${PKG_PATCH_URI[$patch_index]})"
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	echo "Applying patch '${PKG_PATCH_DESC[$patch_index]}' to source tree"
+	tar xvf "${CLFS_SOURCES}/${patch_file}"
+}
+
+function apply_patch_file() {
+	local -i patch_index=${1}
+	local patch_file="$(basename ${PKG_PATCH_URI[$patch_index]})"
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	echo "Applying patch '${PKG_PATCH_DESC[$patch_index]}' to source tree"
+	patch -Np1 -i "${CLFS_SOURCES}/${patch_file}"
+}
+
 function cleanup_package() {
 	set +e
 	cd "${CLFS_SOURCES}"
