@@ -1,12 +1,21 @@
 #!/bin/sh
 
-PKG_NAME=Tar
-PKG_VERS=1.26
-PKG_URI=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.bz2
-PKG_MD5=2cee42a2ff4f1cd4f9298eeeb2264519
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="Tar"
+PKG_VERS="1.26"
+PKG_URI="http://ftp.gnu.org/gnu/tar/tar-1.26.tar.bz2"
+PKG_MD5="2cee42a2ff4f1cd4f9298eeeb2264519"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+
+#
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+
+PKG_PATCH_DESC[0]="Tar Man Page Patch"
+PKG_PATCH_MD5[0]="074783d41f18c5c62a7cfc77e2678693"
+PKG_PATCH_URI[0]="http://patches.cross-lfs.org/dev/tar-1.26-man-1.patch"
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,17 +33,17 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 cross_compile_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 cross_compile_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
@@ -58,17 +67,17 @@ temp_system() {
 }
 
 temp_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 temp_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 temp_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
@@ -186,22 +195,22 @@ final_system() {
 }
 
 final_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 final_system_check() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make check
 }
 
 final_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 final_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=/usr
 }
 

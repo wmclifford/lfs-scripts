@@ -1,12 +1,17 @@
 #!/bin/sh
 
-PKG_NAME=PPL
-PKG_VERS=0.12.1
-PKG_URI=ftp://ftp.cs.unipr.it/pub/ppl/releases/0.12.1/ppl-0.12.1.tar.bz2
-PKG_MD5=8da3ab9de18e669b7af8c4707817d468
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="PPL"
+PKG_VERS="0.12.1"
+PKG_URI="ftp://ftp.cs.unipr.it/pub/ppl/releases/0.12.1/ppl-0.12.1.tar.bz2"
+PKG_MD5="8da3ab9de18e669b7af8c4707817d468"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+
+#
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,17 +29,17 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 cross_compile_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 cross_compile_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
@@ -58,17 +63,17 @@ temp_system() {
 }
 
 temp_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 temp_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 temp_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
@@ -186,22 +191,22 @@ final_system() {
 }
 
 final_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 final_system_check() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make check
 }
 
 final_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 final_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=/usr
 }
 

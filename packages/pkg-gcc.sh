@@ -1,12 +1,29 @@
 #!/bin/sh
 
-PKG_NAME=GCC
-PKG_VERS=4.6.3
-PKG_URI=ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.6.3/gcc-4.6.3.tar.bz2
-PKG_MD5=773092fe5194353b02bb0110052a972e
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="GCC"
+PKG_VERS="4.6.3"
+PKG_URI="ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.6.3/gcc-4.6.3.tar.bz2"
+PKG_MD5="773092fe5194353b02bb0110052a972e"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+
+#
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+
+PKG_PATCH_DESC[0]="GCC Branch Update Patch"
+PKG_PATCH_MD5[0]="e7af1c4a02408aeb25c94ed86c7921d6"
+PKG_PATCH_URI[0]="http://patches.cross-lfs.org/dev/gcc-4.6.3-branch_update-2.patch"
+
+PKG_PATCH_DESC[1]="GCC Mips Fix"
+PKG_PATCH_MD5[1]="abf4b55165bb44508d1f8f36188c9e90"
+PKG_PATCH_URI[1]="http://patches.cross-lfs.org/dev/gcc-4.6.3-mips_fix-1.patch"
+
+PKG_PATCH_DESC[2]="GCC Specs Patch"
+PKG_PATCH_MD5[2]="61d583984f9f12b6f37141e132fc7d57"
+PKG_PATCH_URI[2]="http://patches.cross-lfs.org/dev/gcc-4.6.3-specs-1.patch"
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,17 +41,17 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 cross_compile_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 cross_compile_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
@@ -58,17 +75,17 @@ temp_system() {
 }
 
 temp_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 temp_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 temp_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
@@ -186,22 +203,22 @@ final_system() {
 }
 
 final_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 final_system_check() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make check
 }
 
 final_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 final_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=/usr
 }
 

@@ -1,12 +1,25 @@
 #!/bin/sh
 
-PKG_NAME=Procps
-PKG_VERS=3.2.8
-PKG_URI=http://procps.sourceforge.net/procps-3.2.8.tar.gz
-PKG_MD5=9532714b6846013ca9898984ba4cd7e0
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="Procps"
+PKG_VERS="3.2.8"
+PKG_URI="http://procps.sourceforge.net/procps-3.2.8.tar.gz"
+PKG_MD5="9532714b6846013ca9898984ba4cd7e0"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+
+#
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+
+PKG_PATCH_DESC[0]="Procps Fix HZ Errors Patch"
+PKG_PATCH_MD5[0]="2ea4c8e9a2c2a5a291ec63c92d7c6e3b"
+PKG_PATCH_URI[0]="http://patches.cross-lfs.org/dev/procps-3.2.8-fix_HZ_errors-1.patch"
+
+PKG_PATCH_DESC[1]="Procps ps cgroup Patch"
+PKG_PATCH_MD5[1]="3c478ef88fad23353e332b1b850ec630"
+PKG_PATCH_URI[1]="http://patches.cross-lfs.org/dev/procps-3.2.8-ps_cgroup-1.patch"
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,17 +37,17 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 cross_compile_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 cross_compile_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
@@ -58,17 +71,17 @@ temp_system() {
 }
 
 temp_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 temp_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 temp_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
@@ -186,22 +199,22 @@ final_system() {
 }
 
 final_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 final_system_check() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make check
 }
 
 final_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 final_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=/usr
 }
 

@@ -1,12 +1,25 @@
 #!/bin/sh
 
-PKG_NAME=Ncurses
-PKG_VERS=5.9
-PKG_URI=ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
-PKG_MD5=8cb9c412e5f2d96bc6f459aa8c6282a1
-PKG_ARCHIVE=$(basename ${PKG_URI})
-PKG_SOURCE_DIR=${PKG_ARCHIVE%.tar.*}
-PKG_BUILD_DIR=${PKG_SOURCE_DIR}
+PKG_NAME="Ncurses"
+PKG_VERS="5.9"
+PKG_URI="ftp://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz"
+PKG_MD5="8cb9c412e5f2d96bc6f459aa8c6282a1"
+PKG_ARCHIVE="$(basename ${PKG_URI})"
+PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+
+#
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+
+PKG_PATCH_DESC[0]="Ncurses Bash Patch"
+PKG_PATCH_MD5[0]="c6f7f2ab0ebaf7721ebeb266641352db"
+PKG_PATCH_URI[0]="http://patches.cross-lfs.org/dev/ncurses-5.9-bash_fix-1.patch"
+
+PKG_PATCH_DESC[1]="Ncurses Branch Update Patch"
+PKG_PATCH_MD5[1]="c2b2dc2d31b02c218359e6218f12a72c"
+PKG_PATCH_URI[1]="http://patches.cross-lfs.org/dev/ncurses-5.9-branch_update-4.patch"
 
 #
 # Cross-compile stage (CLFS chapter 5)
@@ -24,17 +37,17 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 cross_compile_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 cross_compile_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
@@ -58,17 +71,17 @@ temp_system() {
 }
 
 temp_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 temp_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 temp_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
@@ -186,22 +199,22 @@ final_system() {
 }
 
 final_system_build() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make
 }
 
 final_system_check() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make check
 }
 
 final_system_install() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
 }
 
 final_system_prepare() {
-	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	./configure --prefix=/usr
 }
 
