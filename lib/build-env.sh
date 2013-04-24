@@ -24,3 +24,19 @@ fi
 #
 LC_ALL=POSIX
 
+# Target-specific variables for the compiler and linkers
+# These are dependent upon which chapter we are presently
+# building. Pre-chapter 6 requires they be left unset.
+if [ $CLFS_CHAPTER -ge 6 ] ; then
+	CC="${CLFS_TARGET}-gcc"
+	CXX="${CLFS_TARGET}-g++"
+	AR="${CLFS_TARGET}-ar"
+	AS="${CLFS_TARGET}-as"
+	RANLIB="${CLFS_TARGET}-ranlib"
+	LD="${CLFS_TARGET}-ld"
+	STRIP="${CLFS_TARGET}-strip"
+else
+	# Chapter 5 and earlier ...
+	unset CC CXX AR AS RANLIB LD STRIP
+fi
+
