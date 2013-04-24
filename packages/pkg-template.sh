@@ -24,15 +24,18 @@ cross_compile() {
 }
 
 cross_compile_build() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make
 }
 
 cross_compile_install() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make install
 }
 
 cross_compile_prepare() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	./configure --prefix=${CLFS_CROSS_TOOLS}
 }
 
 cross_compile_post_install() {
@@ -55,15 +58,18 @@ temp_system() {
 }
 
 temp_system_build() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make
 }
 
 temp_system_install() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make install
 }
 
 temp_system_prepare() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
 temp_system_post_install() {
@@ -173,21 +179,30 @@ final_system() {
 	dump_package $1
 	final_system_prepare
 	final_system_build
+	final_system_check
 	final_system_install
 	final_system_post_install
 	cleanup_package $1
 }
 
 final_system_build() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make
+}
+
+final_system_check() {
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make check
 }
 
 final_system_install() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make install
 }
 
 final_system_prepare() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	./configure --prefix=/usr
 }
 
 final_system_post_install() {
