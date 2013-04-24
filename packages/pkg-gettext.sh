@@ -64,17 +64,23 @@ temp_system() {
 
 temp_system_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make
+	cd gettext-tools
+	make -C gnulib-lib
+	make -C src msgfmt
 }
 
 temp_system_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make install
+	cd gettext-tools
+	cp -v src/msgfmt ${CLFS_TOOLS}/bin
 }
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	cd gettext-tools
+	echo "gl_cv_func_wcwidth_works=yes" > config.cache
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--disable-shared --cache-file=config.cache
 }
 
 temp_system_post_install() {

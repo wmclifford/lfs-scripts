@@ -75,7 +75,8 @@ temp_system_install() {
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--enable-shared --with-gmp=${CLFS_TOOLS}
 }
 
 temp_system_post_install() {

@@ -69,6 +69,7 @@ temp_system() {
 
 temp_system_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make configure-host
 	make
 }
 
@@ -79,7 +80,10 @@ temp_system_install() {
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_TOOLS} \
+		--build=${CLFS_HOST} --host=${CLFS_TARGET} --target=${CLFS_TARGET} \
+		--with-lib-path=${CLFS_TOOLS}/lib --disable-nls --enable-shared \
+		--disable-multilib
 }
 
 temp_system_post_install() {

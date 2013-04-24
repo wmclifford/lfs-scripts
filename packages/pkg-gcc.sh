@@ -110,7 +110,6 @@ cross_compile_prepare() {
 	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_2\\n#define STANDARD_STARTFILE_PREFIX_2 \"\"\\n" >> gcc/config/linux.h
 	cp -v gcc/Makefile.in{,.orig}
 	sed -e "s@\(^CROSS_SYSTEM_HEADER_DIR =\).*@\1 ${CLFS_TOOLS}/include@g" gcc/Makefile.in.orig > gcc/Makefile.in
-	touch ${CLFS_TOOLS}/include/limits.h
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	AR=ar LDFLAGS="-Wl,-rpath,${CLFS_CROSS_TOOLS}/lib" \
 		../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_CROSS_TOOLS} \
@@ -143,7 +142,7 @@ temp_system() {
 
 temp_system_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make
+	make AS_FOR_TARGET="${AS}" LD_FOR_TARGET="${LD}"
 }
 
 temp_system_install() {
@@ -152,8 +151,23 @@ temp_system_install() {
 }
 
 temp_system_prepare() {
+	apply_patch_file 0
+	apply_patch_file 2
+	apply_patch_file 1
+	echo -en "#undef STANDARD_INCLUDE_DIR\\n#define STANDARD_INCLUDE_DIR \"${CLFS_TOOLS}/include/\"\\n\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_1\\n#define STANDARD_STARTFILE_PREFIX_1 \"${CLFS_TOOLS}/lib/\"\\n" >> gcc/config/linux.h
+	echo -en "\\n#undef STANDARD_STARTFILE_PREFIX_2\\n#define STANDARD_STARTFILE_PREFIX_2 \"\"\\n" >> gcc/config/linux.h
+	cp -v gcc/Makefile.in{,.orig}
+	sed -e "s@\(^NATIVE_SYSTEM_HEADER_DIR =\).*@\1 ${CLFS_TOOLS}/include@g" gcc/Makefile.in.orig > gcc/Makefile.in
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	../${PKG_SOURCE_DIR}/configure --prefix=${CLFS_TOOLS} \
+		--build=${CLFS_HOST} --host=${CLFS_TARGET} --target=${CLFS_TARGET} \
+		--with-local-prefix=${CLFS_TOOLS} --enable-long-long --enable-c99 \
+		--enable-shared --enable-threads=posix --enable-__cxa_atexit \
+		--disable-nls --enable-languages=c,c++ --disable-libstdcxx-pch \
+		--disable-multilib --enable-cloog-backend=isl
+	cp -v Makefile{,.orig}
+	sed "/^HOST_\(GMP\|PPL\|CLOOG\)\(LIBS\|INC\)/s:-[IL]/\(lib\|include\)::" Makefile.orig > Makefile
 }
 
 temp_system_post_install() {

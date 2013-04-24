@@ -83,8 +83,12 @@ temp_system_install() {
 }
 
 temp_system_prepare() {
+	apply_patch_file 0
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	./configure --prefix=${CLFS_TOOLS} --with-shared \
+		--build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--without-debug --without-ada \
+		--enable-overwrite --with-build-cc=gcc
 }
 
 temp_system_post_install() {

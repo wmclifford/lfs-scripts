@@ -74,15 +74,46 @@ temp_system_build() {
 temp_system_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
 	make install
+	ln -sv vim ${CLFS_TOOLS}/bin/vi
 }
 
 temp_system_prepare() {
+	apply_patch_file 0
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	cp -v src/auto/configure{,.orig}
+	sed "/using uint32_t/s/as_fn_error/#&/" src/auto/configure.orig > src/auto/configure
+	cat > src/auto/config.cache << "EOF"
+vim_cv_getcwd_broken=no
+vim_cv_memmove_handles_overlap=yes
+vim_cv_stat_ignores_slash=no
+vim_cv_terminfo=yes
+vim_cv_tgent=zero
+vim_cv_toupper_broken=no
+vim_cv_tty_group=world
+ac_cv_sizeof_int=4
+ac_cv_sizeof_long=4
+ac_cv_sizeof_time_t=4
+ac_cv_sizeof_off_t=4
+EOF
+	echo "#define SYS_VIMRC_FILE \"${CLFS_TOOLS}/etc/vimrc\"" >> src/feature.h
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--enable-multibyte --enable-gui=no \
+		--disable-gtktest --disable-xim --with-features=normal \
+		--disable-gpm --without-x --disable-netbeans \
+		--with-tlib=ncurses
 }
 
 temp_system_post_install() {
-	NTD
+	cat > ${CLFS_TOOLS}/etc/vimrc << "EOF"
+" Begin /etc/vimrc
+
+set nocompatible
+set backspace=2
+set ruler
+syntax on
+
+" End /etc/vimrc
+EOF
 }
 
 #

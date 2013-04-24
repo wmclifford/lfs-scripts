@@ -68,6 +68,8 @@ temp_system() {
 
 temp_system_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make -C tools/gnulib/lib
+	make -C tools
 	make
 }
 

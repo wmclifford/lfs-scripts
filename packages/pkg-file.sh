@@ -58,15 +58,18 @@ temp_system() {
 }
 
 temp_system_build() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make
 }
 
 temp_system_install() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_BUILD_DIR}
+	make install
 }
 
 temp_system_prepare() {
-	NTD
+	cd ${CLFS_SOURCES}/${PKG_SOURCE_DIR}
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
 temp_system_post_install() {

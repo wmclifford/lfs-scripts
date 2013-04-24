@@ -78,7 +78,25 @@ temp_system_install() {
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	touch man/uname.1 man/hostname.1
+	cat > config.cache << EOF
+fu_cv_sys_stat_statfs2_bsize=yes
+gl_cv_func_working_mkstemp=yes
+EOF
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--enable-install-program=hostname --cache-file=config.cache
+	cp -v Makefile{,.orig}
+	sed '/src_make_prime_list/d' Makefile.orig > Makefile
+	depbase=`echo src/make-prime-list.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+		gcc -std=gnu99  -I. -I./lib  -Ilib -I./lib -Isrc -I./src  \
+		    -fdiagnostics-show-option -funit-at-a-time -g -O2 -MT \
+		    src/make-prime-list.o -MD -MP -MF $depbase.Tpo -c -o src/make-prime-list.o \
+		    src/make-prime-list.c &&
+	mv -f $depbase.Tpo $depbase.Po
+	gcc -std=gnu99 -fdiagnostics-show-option -funit-at-a-time -g -O2 \
+	    -Wl,--as-needed  -o src/make-prime-list src/make-prime-list.o
+	cp -v Makefile{,.bak}
+	sed -e '/hostname.1/d' Makefile.bak > Makefile
 }
 
 temp_system_post_install() {

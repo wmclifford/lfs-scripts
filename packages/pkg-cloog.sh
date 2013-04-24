@@ -78,7 +78,10 @@ temp_system_install() {
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	cp -v configure{,.orig}
+	sed -e "/LD_LIBRARY_PATH=/d" configure.orig >configure
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--with-gmp-prefix=${CLFS_TOOLS}
 }
 
 temp_system_post_install() {

@@ -64,17 +64,18 @@ temp_system() {
 
 temp_system_build() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make
+	make CC="${CC}" AR="${AR}" RANLIB="${RANLIB}"
 }
 
 temp_system_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make install
+	make PREFIX=${CLFS_TOOLS} install
 }
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	cp -v Makefile{,.orig}
+	sed -e 's@^\(all:.*\) test@\1@g' Makefile.orig > Makefile
 }
 
 temp_system_post_install() {

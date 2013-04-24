@@ -74,7 +74,10 @@ temp_system_install() {
 
 temp_system_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET}
+	echo "gl_cv_func_wcwidth_works=yes" > config.cache
+	echo "ac_cv_func_fnmatch_gnu=yes" >> config.cache
+	./configure --prefix=${CLFS_TOOLS} --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--cache-file=config.cache
 }
 
 temp_system_post_install() {
