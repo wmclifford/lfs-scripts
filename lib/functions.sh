@@ -27,12 +27,32 @@ function dump_package() {
 	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
 }
 
+function fetch_all_patches() {
+	local -i patch_count=${#PKG_PATCH_DESC[*]}
+	local -i patch_index=0
+	while [ $patch_index -lt $patch_count ] ; do
+		fetch_patch $patch_index
+	done
+}
+
+function fetch_patch() {
+	local patch_index=${1:-0}
+	local patch_desc="${PKG_PATCH_DESC[$patch_index]}"
+	local patch_uri="${PKG_PATCH_URI[$patch_index]}"
+	local patch_filename="$(basename $patch_uri)"
+	cd "${CLFS_SOURCES}"
+	if [ ! -f "${CLFS_SOURCES}/${patch_filename}" ] ; then
+		echo "Retrieving patch \"$path_desc\" ..."
+		wget "${PKG_PATCH_URI[$patch_index]}"
+	fi
+}
+
 function get_package() {
 	cd "${CLFS_SOURCES}"
-	if [ -f "${CLFS_SOURCES}/${PKG_ARCHIVE}" ] ; then
-		return 0
+	if [ ! -f "${CLFS_SOURCES}/${PKG_ARCHIVE}" ] ; then
+		wget "${PKG_URI}"
 	fi
-	wget ${PKG_URI}
+	fetch_all_patches
 }
 
 function group_exists() {
@@ -43,9 +63,28 @@ function user_exists() {
 	grep --quiet "${1}" /etc/passwd
 }
 
+function validate_all_patches() {
+	local -i patch_count=${#PKG_PATCH_DESC[*]}
+	local -i patch_index=0
+	while [ $patch_index -lt $patch_count ] ; do
+		validate_patch $patch_index
+	done
+}
+
 function validate_package() {
 	cd "${CLFS_SOURCES}"
 	echo "${PKG_MD5} *${PKG_ARCHIVE}" |md5sum --check
+	validate_all_patches
+}
+
+function validate_patch() {
+	local patch_index=${1:-0}
+	local patch_desc="${PKG_PATCH_DESC[$patch_index]}"
+	local patch_uri="${PKG_PATCH_URI[$patch_index]}"
+	local patch_filename="$(basename $patch_uri)"
+	local patch_md5="${PKG_PATCH_MD5[$patch_index]}"
+	cd "${CLFS_SOURCES}"
+	echo "$patch_md5  $patch_filename" |md5sum --check
 }
 
 function GTG() {
