@@ -17,12 +17,17 @@ CLFS_USER=clfs
 CLFS_HOME=/home/${CLFS_USER}
 CLFS_SUDO=
 
+if [ "x${USER}" == "x" ] ; then
+	USER=`id -un`
+fi
+
 if [ $UID -ne 0 ] ; then
     CLFS_SUDO=sudo
 fi
 
 #
 LC_ALL=POSIX
+CLFS_VERBOSE="-v"
 
 # Target-specific variables for the compiler and linkers
 # These are dependent upon which chapter we are presently

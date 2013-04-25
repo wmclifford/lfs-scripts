@@ -13,14 +13,14 @@ PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 #
 
 cross_compile() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	cross_compile_prepare
 	cross_compile_build
 	cross_compile_install
 	cross_compile_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 cross_compile_build() {
@@ -47,14 +47,14 @@ cross_compile_post_install() {
 #
 
 temp_system() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	temp_system_prepare
 	temp_system_build
 	temp_system_install
 	temp_system_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 temp_system_build() {
@@ -81,14 +81,14 @@ temp_system_post_install() {
 #
 
 temp_system_BOOT() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	temp_system_BOOT_prepare
 	temp_system_BOOT_build
 	temp_system_BOOT_install
 	temp_system_BOOT_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 temp_system_BOOT_build() {
@@ -112,14 +112,14 @@ temp_system_BOOT_post_install() {
 #
 
 temp_system_CHROOT() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	temp_system_CHROOT_prepare
 	temp_system_CHROOT_build
 	temp_system_CHROOT_install
 	temp_system_CHROOT_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 temp_system_CHROOT_build() {
@@ -143,14 +143,14 @@ temp_system_CHROOT_post_install() {
 #
 
 construct_testsuite_tools() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	construct_testsuite_prepare
 	construct_testsuite_build
 	construct_testsuite_install
 	construct_testsuite_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 construct_testsuite_build() {
@@ -174,14 +174,14 @@ construct_testsuite_post_install() {
 #
 
 final_system() {
-	get_package $1
+	get_package
 	validate_package
-	dump_package $1
+	dump_package
 	final_system_prepare
 	final_system_build
 	final_system_install
 	final_system_post_install
-	cleanup_package $1
+	cleanup_package
 }
 
 final_system_build() {
