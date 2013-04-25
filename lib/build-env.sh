@@ -27,7 +27,8 @@ fi
 
 #
 LC_ALL=POSIX
-CLFS_VERBOSE="-v"
+#CLFS_VERBOSE="-v"
+CLFS_VERBOSE=""
 
 # Target-specific variables for the compiler and linkers
 # These are dependent upon which chapter we are presently
