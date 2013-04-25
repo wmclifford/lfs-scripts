@@ -27,19 +27,20 @@ fi
 
 trap WAT EXIT
 
-source ../packages/pkg-linux-headers.sh ; cross_compile
-source ../packages/pkg-file.sh ; cross_compile
-source ../packages/pkg-m4.sh ; cross_compile
-source ../packages/pkg-ncurses.sh ; cross_compile
-source ../packages/pkg-gmp.sh ; cross_compile
-source ../packages/pkg-mpfr.sh ; cross_compile
-source ../packages/pkg-mpc.sh ; cross_compile
-source ../packages/pkg-ppl.sh ; cross_compile
-source ../packages/pkg-cloog.sh ; cross_compile
-source ../packages/pkg-binutils.sh ; cross_compile
-source ../packages/pkg-gcc.sh ; cross_compile_static
-source ../packages/pkg-eglibc.sh ; cross_compile
-source ../packages/pkg-gcc.sh ; cross_compile
+CLFS_BUILD_ROOT="$(pwd)"
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-linux-headers.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-file.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-m4.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-ncurses.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-gmp.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-mpfr.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-mpc.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-ppl.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-cloog.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-binutils.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-gcc.sh ; cross_compile_static
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-eglibc.sh ; cross_compile
+cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-gcc.sh ; cross_compile
 
 PKG_NAME="CLFS"
 PKG_VERS="2.0rc1"
