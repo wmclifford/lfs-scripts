@@ -11,6 +11,7 @@ PKG_BUILD_DIR="binutils-build"
 #
 # Patches required by this package
 #
+unset PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
 declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
 
 #
