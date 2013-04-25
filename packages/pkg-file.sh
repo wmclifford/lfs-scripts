@@ -9,6 +9,11 @@ PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
 PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 
 #
+# Patches required by this package
+#
+declare -a PKG_PATCH_URI PKG_PATCH_MD5 PKG_PATCH_DESC
+
+#
 # Cross-compile stage (CLFS chapter 5)
 #
 
