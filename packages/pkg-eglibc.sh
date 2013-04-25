@@ -6,7 +6,7 @@ PKG_URI="http://cross-lfs.org/files/eglibc-2.15-r21467.tar.xz"
 PKG_MD5="f4087281e50843e67da86dd8da3ec9a3"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
 PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
-PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+PKG_BUILD_DIR="eglibc-build"
 
 #
 # Patches required by this package

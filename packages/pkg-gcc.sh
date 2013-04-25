@@ -6,7 +6,7 @@ PKG_URI="ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.6.3/gcc-4.6.3.tar.bz2"
 PKG_MD5="773092fe5194353b02bb0110052a972e"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
 PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
-PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+PKG_BUILD_DIR="gcc-build"
 
 #
 # Patches required by this package
