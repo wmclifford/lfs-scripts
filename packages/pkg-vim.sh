@@ -74,7 +74,7 @@ temp_system_build() {
 
 temp_system_install() {
 	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
-	make install
+	make install STRIP="${STRIP}"
 	ln -sv vim ${CLFS_TOOLS}/bin/vi
 }
 
