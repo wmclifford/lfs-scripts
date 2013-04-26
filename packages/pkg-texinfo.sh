@@ -5,7 +5,7 @@ PKG_VERS="4.13a"
 PKG_URI="http://ftp.gnu.org/gnu/texinfo/texinfo-4.13a.tar.gz"
 PKG_MD5="71ba711519209b5fb583fed2b3d86fcb"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
-PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
+PKG_SOURCE_DIR="texinfo-4.13"
 PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
 
 #
