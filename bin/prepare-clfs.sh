@@ -21,14 +21,14 @@ trap WAT EXIT
 if [ "x${CLFS_SUDO}" != "x" ] ; then
 	# We are not root; call sudo to get the password entered now, so that
 	# subsequent calls to sudo do not prompt each time.
-	echo "
+	echo -e "${COLOR_YELLOW}
 ------------------------------------------------------------------------
 WARNING: Running as non-privileged user ${USER}.
 This portion of the cross linux from scratch build requires root access
 to the build system. Attempting to get sudo access ...
 ------------------------------------------------------------------------
-"
-	${CLFS_SUDO} echo "Successfully acquired sudo access. Continuing with build."
+${COLOR_RESET}"
+	${CLFS_SUDO} echo -e "${COLOR_GREEN}Successfully acquired sudo access. Continuing with build.${COLOR_RESET}"
 fi
 
 # Make sure ${CLFS} exists.
@@ -94,13 +94,13 @@ ${CLFS_SUDO} echo "export CLFS LC_ALL PATH" >>/tmp/${CLFS_USER}-bashrc
 ${CLFS_SUDO} mv -f /tmp/${CLFS_USER}-bashrc ${CLFS_HOME}/.bashrc
 ${CLFS_SUDO} chown ${CLFS_USER}:${CLFS_GROUP} ${CLFS_HOME}/.bash_profile ${CLFS_HOME}/.bashrc
 
-echo "
+echo -e "${COLOR_WHITE}
 ------------------------------------------------------------------------
 Cross Linux From Scratch - initial preparation complete.
 To continue the build process, change to user ${CLFS_USER},
 and run the cross-compile stage (cross-compile-stage.sh).
 ------------------------------------------------------------------------
-"
+${COLOR_RESET}"
 
 trap GTG EXIT
 

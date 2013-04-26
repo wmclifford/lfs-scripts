@@ -21,7 +21,7 @@ if [ "$USER" != "${CLFS_USER}" ] ; then
 //          This stage needs to be run as the CLFS user '${CLFS_USER}'.
 //          Aborting build.
 ////////////////////////////////////////////////////////////////////////
-"
+${COLOR_RESET}"
 	exit 1
 fi
 

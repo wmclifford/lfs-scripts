@@ -15,13 +15,13 @@ source ../lib/build-env.sh
 
 # Make sure we are running this as the CLFS user.
 if [ "$USER" != "${CLFS_USER}" ] ; then
-	echo "
+	echo -e "${COLOR_YELLOW}
 ////////////////////////////////////////////////////////////////////////
 // WARNING: Presently running script as user '${USER}';
 //          This stage needs to be run as the CLFS user '${CLFS_USER}'.
 //          Aborting build.
 ////////////////////////////////////////////////////////////////////////
-"
+${COLOR_RESET}"
 	exit 1
 fi
 
