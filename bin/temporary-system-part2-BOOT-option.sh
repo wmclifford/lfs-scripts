@@ -58,7 +58,11 @@ ln -sv ${CLFS_TOOLS}/bin/file ${CLFS}/usr/bin
 ln -sv ${CLFS_TOOLS}/lib/libgcc_s.so{,.1} ${CLFS}/usr/lib
 ln -sv ${CLFS_TOOLS}/lib/libstd*so* ${CLFS}/usr/lib
 ln -sv bash ${CLFS}/bin/sh
-ln -sv /run ${CLFS}/var/run
+# FIXED: touch $CLFS/var/run/utmp fails below if link goes to "/run" ...
+#        that folder is on the host system, and we cannot write there.
+#        Using "../run" points "$CLFS/var/run" to "$CLFS/run"; this is
+#        where it should go.
+ln -sv ../run ${CLFS}/var/run
 
 CLFS_BUILD_ROOT="$(pwd)"
 cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-util-linux.sh ; temp_system_BOOT
@@ -113,6 +117,7 @@ chmod -v 664 ${CLFS}/var/run/utmp ${CLFS}/var/log/lastlog
 chmod -v 600 ${CLFS}/var/log/btmp
 
 # Linux kernel setup
+cp -vf "${CLFS_BUILD_ROOT}/../mini6410-kernel_3.8.7-config-plusUSB" "${CLFS_SOURCES}/kernel-3.8.7-config"
 cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-linux.sh ; temp_system_BOOT
 
 # Setting up the environment
@@ -123,6 +128,7 @@ LC_ALL=POSIX
 PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/tools/sbin
 export LC_ALL PATH PS1
 EOF
+sed -i "s,/tools,${CLFS_TOOLS},g" ${CLFS}/root/.bash_profile
 
 # Creating the /etc/fstab file
 # Note that the root file system is not defined here; this is a deviation
@@ -151,14 +157,16 @@ EOF
 cd "${CLFS_BUILD_ROOT}" ; source ../packages/pkg-bootscripts.sh ; temp_system_BOOT
 
 # Populating /dev/
-mknod -m 600 ${CLFS}/dev/console c 5 1
-mknod -m 666 ${CLFS}/dev/null c 1 3
-mknod -m 600 ${CLFS}/lib/udev/devices/console c 5 1
-mknod -m 666 ${CLFS}/lib/udev/devices/null c 1 3
+${CLFS_SUDO} mknod -m 600 ${CLFS}/dev/console c 5 1
+${CLFS_SUDO} mknod -m 666 ${CLFS}/dev/null c 1 3
+${CLFS_SUDO} mknod -m 660 ${CLFS}/dev/mmcblkp0 b 179 0
+${CLFS_SUDO} mknod -m 600 ${CLFS}/lib/udev/devices/console c 5 1
+${CLFS_SUDO} mknod -m 666 ${CLFS}/lib/udev/devices/null c 1 3
+${CLFS_SUDO} mknod -m 660 ${CLFS}/lib/udev/devices/mmcblkp0 b 179 0
 
 # Changing ownership
-chown -Rv 0:0 ${CLFS}
-chgrp -v 13 ${CLFS}/var/run/utmp ${CLFS}/var/log/lastlog
+${CLFS_SUDO} chown -Rv 0:0 ${CLFS}
+${CLFS_SUDO} chgrp -v 13 ${CLFS}/var/run/utmp ${CLFS}/var/log/lastlog
 
 PKG_NAME="CLFS"
 PKG_VERS="2.0rc1"
