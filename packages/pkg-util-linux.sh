@@ -98,15 +98,22 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make install
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	PKG_CONFIG=true \
+		./configure --prefix=${CLFS_TOOLS} --exec-prefix=${CLFS_TOOLS} \
+			--build=${CLFS_HOST} --host=${CLFS_TARGET} \
+			--disable-makeinstall-chown --disable-login --disable-su \
+			--config-cache
 }
 
 temp_system_BOOT_post_install() {

@@ -102,7 +102,8 @@ temp_system_BOOT_build() {
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make DESTDIR=${CLFS} install-minimal
 }
 
 temp_system_BOOT_prepare() {
@@ -110,7 +111,13 @@ temp_system_BOOT_prepare() {
 }
 
 temp_system_BOOT_post_install() {
-	NTD
+	cat > ${CLFS}/etc/sysconfig/clock << "EOF"
+# Begin /etc/sysconfig/clock
+
+UTC=1
+
+# End /etc/sysconfig/clock
+EOF
 }
 
 #

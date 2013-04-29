@@ -98,15 +98,23 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make DESTDIR=${CLFS} install
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	cp -v src/Makefile.in{,.orig}
+	sed -e 's/groups$(EXEEXT) //' src/Makefile.in.orig > src/Makefile.in
+	echo "ac_cv_func_setpgrp_void=yes" > config.cache
+	./configure --prefix=${CLFS_TOOLS} \
+		--build=${CLFS_HOST} --host=${CLFS_TARGET} --sysconfdir=/etc \
+		--cache-file=config.cache
 }
 
 temp_system_BOOT_post_install() {

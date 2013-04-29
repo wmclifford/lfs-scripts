@@ -6,7 +6,7 @@ PKG_URI="http://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.42.6/e
 PKG_MD5="a75d1ffd3980e1470014da3df309c862"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
 PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
-PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
+PKG_BUILD_DIR="${PKG_SOURCE_DIR}/build"
 
 #
 # Patches required by this package
@@ -98,15 +98,27 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make LIBUUID="-luuid" STATIC_LIBUUID="-luuid" \
+		LIBBLKID="-lblkid" STATIC_LIBBLKID="-lblkid"
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make install
+	make install-libs
+	ln -sv ${CLFS_TOOLS}/sbin/{fsck.ext2,fsck.ext3,fsck.ext4,e2fsck} ${CLFS}/sbin
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	mkdir -v build
+	cd build
+	PKG_CONFIG=true \
+		../configure --prefix=${CLFS_TOOLS} \
+			--enable-elf-shlibs --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+			--disable-libblkid --disable-libuuid --disable-fsck \
+			--disable-uuid
 }
 
 temp_system_BOOT_post_install() {

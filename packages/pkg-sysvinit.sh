@@ -98,19 +98,53 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make -C src clobber
+	make -C src CC="${CC}"
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make -C src ROOT="${CLFS}" install
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	cp -v src/Makefile{,.orig}
+	sed -e "s,/usr/lib,${CLFS_TOOLS}/lib,g" src/Makefile.orig > src/Makefile
 }
 
 temp_system_BOOT_post_install() {
-	NTD
+	cat > ${CLFS}/etc/inittab << "EOF"
+# Begin /etc/inittab
+
+id:3:initdefault:
+
+si::sysinit:/etc/rc.d/init.d/rc sysinit
+
+l0:0:wait:/etc/rc.d/init.d/rc 0
+l1:S1:wait:/etc/rc.d/init.d/rc 1
+l2:2:wait:/etc/rc.d/init.d/rc 2
+l3:3:wait:/etc/rc.d/init.d/rc 3
+l4:4:wait:/etc/rc.d/init.d/rc 4
+l5:5:wait:/etc/rc.d/init.d/rc 5
+l6:6:wait:/etc/rc.d/init.d/rc 6
+
+ca:12345:ctrlaltdel:/sbin/shutdown -t1 -a -r now
+
+su:S016:once:/sbin/sulogin
+
+1:2345:respawn:/sbin/agetty tty1 38400
+2:2345:respawn:/sbin/agetty tty2 38400
+3:2345:respawn:/sbin/agetty tty3 38400
+4:2345:respawn:/sbin/agetty tty4 38400
+5:2345:respawn:/sbin/agetty tty5 38400
+6:2345:respawn:/sbin/agetty tty6 38400
+
+c0:12345:respawn:/sbin/agetty 115200 ttySAC0 vt102
+
+# End /etc/inittab
+EOF
 }
 
 #

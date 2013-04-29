@@ -98,15 +98,28 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make DESTDIR=${CLFS} install
+	install -dv ${CLFS}/lib/firmware
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	LIBS="-lpthread" \
+		BLKID_CFLAGS="-I${CLFS_TOOLS}/include/blkid" \
+		BLKID_LIBS="-L${CLFS_TOOLS}/lib -lblkid" \
+		KMOD_CFLAGS="-I${CLFS_TOOLS}/include" \
+		KMOD_LIBS="-L${CLFS}/lib -lkmod" \
+		./configure --prefix=/usr --build=${CLFS_HOST} --host=${CLFS_TARGET} \
+		--with-rootprefix=${CLFS} --bindir=/sbin --sysconfdir=/etc --libexecdir=/lib \
+		--disable-introspection --with-usb-ids-path=no --with-pci-ids-path=no \
+		--disable-gtk-doc-html --disable-gudev --disable-keymap --disable-logging \
+		--with-firmware-path=/lib/firmware
 }
 
 temp_system_BOOT_post_install() {

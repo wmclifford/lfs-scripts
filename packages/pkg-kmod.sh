@@ -98,15 +98,25 @@ temp_system_BOOT() {
 }
 
 temp_system_BOOT_build() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make
 }
 
 temp_system_BOOT_install() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_BUILD_DIR}"
+	make DESTDIR=${CLFS} install
+	ln -sv kmod ${CLFS}/bin/lsmod
+	ln -sv ../bin/kmod ${CLFS}/sbin/depmod
+	ln -sv ../bin/kmod ${CLFS}/sbin/insmod
+	ln -sv ../bin/kmod ${CLFS}/sbin/modprobe
+	ln -sv ../bin/kmod ${CLFS}/sbin/modinfo
+	ln -sv ../bin/kmod ${CLFS}/sbin/rmmod
 }
 
 temp_system_BOOT_prepare() {
-	NTD
+	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
+	./configure --prefix=${CLFS_TOOLS} --bindir=/bin \
+		--build=${CLFS_HOST} --host=${CLFS_TARGET}
 }
 
 temp_system_BOOT_post_install() {
