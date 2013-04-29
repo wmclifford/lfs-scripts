@@ -3,7 +3,7 @@
 PKG_NAME="Linux"
 PKG_VERS="3.8.7"
 PKG_URI="http://www.kernel.org/pub/linux/kernel/v3.0/linux-3.8.7.tar.xz"
-PKG_MD5=""
+PKG_MD5="37ce9b5cc33551b45fea59c1c4c9da13"
 PKG_ARCHIVE="$(basename ${PKG_URI})"
 PKG_SOURCE_DIR="${PKG_ARCHIVE%.tar.*}"
 PKG_BUILD_DIR="${PKG_SOURCE_DIR}"
@@ -192,6 +192,7 @@ temp_system_BOOT_prepare() {
 	for ii in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 ; do
 		apply_patch_file $ii
 	done
+	cp -v "${CLFS_SOURCES}/kernel-${PKG_VERS}-config" "${CLFS_SOURCES}/${PKG_SOURCE_DIR}/.config"
 	make ARCH=${CLFS_TARGET_ARCH} CROSS_COMPILE=${CLFS_TARGET}- menuconfig
 }
 
