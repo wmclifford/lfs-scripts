@@ -112,13 +112,12 @@ temp_system_BOOT_install() {
 
 temp_system_BOOT_prepare() {
 	cd "${CLFS_SOURCES}/${PKG_SOURCE_DIR}"
-	mkdir -v build
 	cd build
 	PKG_CONFIG=true \
 		../configure --prefix=${CLFS_TOOLS} \
 			--enable-elf-shlibs --build=${CLFS_HOST} --host=${CLFS_TARGET} \
 			--disable-libblkid --disable-libuuid --disable-fsck \
-			--disable-uuid
+			--disable-uuidd
 }
 
 temp_system_BOOT_post_install() {
